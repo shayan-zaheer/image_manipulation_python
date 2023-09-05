@@ -1,1 +1,2 @@
 # image_manipulation_python
+The "Image Manipulation" project is a Python-based graphical user interface (GUI) application built using the customtkinter library and Pillow (PIL). This project empowers users to open, edit, and save images with a wide array of image manipulation tools. Users can adjust brightness, contrast, sharpness, apply various filters, resize, rotate, and perform other image transformations effortlessly.
