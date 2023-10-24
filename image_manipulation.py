@@ -9,10 +9,10 @@ space = " " * 205
 root.title(f"{space}Image Manipulation")
 set_appearance_mode("dark")
 
-def showbuttons():
-    # BUTTONS
+# BUTTONS
 
-    save_btn = CTkButton(root, text='Save', width=25, command=save)
+def showbuttons():
+    save_btn = CTkButton(root, text="Save", width=25, command=save)
     save_btn.place(x=1320, y=675)
 
     blur_btn = CTkButton(root, text="Blur", command=blur_slide)
@@ -36,7 +36,7 @@ def showbuttons():
     sharp_btn = CTkButton(root, text="Sharpness", command=sharp_slide)
     sharp_btn.place(x=3, y=190)
 
-    rotate_btn = CTkButton(root, text="Rotate", command=lambda: rotate(0))
+    rotate_btn = CTkButton(root, text="Rotate", command=rotate_slide)
     rotate_btn.place(x=3, y=220)
 
     enhance_btn = CTkButton(root, text="Color Enhance", command=enhance_slide)
@@ -101,8 +101,7 @@ def open_image():
 l_logo = CTkLabel(root, text="Image Manipulation", font=("Lucida Console", 40))
 l_logo.place(x=680, y=250, anchor=N)
 
-file_image = CTkImage(
-    Image.open("openfile.png").resize((20, 20), Image.LANCZOS))
+file_image = CTkImage(Image.open("F:\\linkedin\\openfile.png").resize((20, 20), Image.LANCZOS))
 
 open_img = CTkButton(root, text="Open Image", image=file_image, compound="left", command=open_image)
 open_img.place(relx=0.5, rely=0.5, anchor=CENTER)
@@ -137,20 +136,19 @@ def contrast_enhancer(x):
     outputImage = contrast_enhance.enhance(x)
     showimage(outputImage)
 
-
 # SLIDERS
 
 bright_click = 0
 sharp_click = 0
 blur_click = 0
 contrast_click = 0
+rotate_click = 0
 enhance_click = 0
 cenhance_click = 0
 unsharp_click = 0
 solarize_click = 0
 pad_click = 0
 gauss_click = 0
-
 
 def bright_slide():
     global brightslide, bright_click
@@ -161,7 +159,6 @@ def bright_slide():
         brightslide = CTkSlider(root, from_=0, to=5, command=brightness)
         brightslide.place(x=150, y=75)
 
-
 def sharp_slide():
     global sharpslide, sharp_click
     sharp_click += 1
@@ -170,7 +167,6 @@ def sharp_slide():
     else:
         sharpslide = CTkSlider(root, from_=0, to=20, command=sharpness)
         sharpslide.place(x=150, y=195)
-
 
 def blur_slide():
     global blurslide, blur_click
@@ -181,7 +177,6 @@ def blur_slide():
         blurslide = CTkSlider(root, from_=0, to=20, command=image_blur)
         blurslide.place(x=150, y=15)
 
-
 def contrast_slide():
     global contrastslide, contrast_click
     contrast_click += 1
@@ -190,7 +185,6 @@ def contrast_slide():
     else:
         contrastslide = CTkSlider(root, from_=0, to=5, command=contrast)
         contrastslide.place(x=150, y=45)
-
 
 def enhance_slide():
     global enhanceslide, enhance_click
@@ -201,6 +195,14 @@ def enhance_slide():
         enhanceslide = CTkSlider(root, from_=0, to=20, command=color_enhance)
         enhanceslide.place(x=150, y=255)
 
+def rotate_slide():
+    global rotateslide, rotate_click
+    rotate_click += 1
+    if rotate_click % 2 == 0:
+        rotateslide.place_forget()
+    else:
+        rotateslide = CTkSlider(root, from_=0, to=360, command=rotate_image)
+        rotateslide.place(x=150, y=225)
 
 def cenhance_slide():
     global cenhanceslide, cenhance_click
@@ -211,7 +213,6 @@ def cenhance_slide():
         cenhanceslide = CTkSlider(root, from_=0, to=20, command=contrast_enhancer)
         cenhanceslide.place(x=150, y=285)
 
-
 def unsharp_slide():
     global unsharpslide, unsharp_click
     unsharp_click += 1
@@ -220,7 +221,6 @@ def unsharp_slide():
     else:
         unsharpslide = CTkSlider(root, from_=0, to=70, command=image_unsharp)
         unsharpslide.place(x=150, y=645)
-
 
 def solarize_slide():
     global solarizeslide, solarize_click
@@ -231,12 +231,10 @@ def solarize_slide():
         solarizeslide = CTkSlider(root, from_=30, to=90, command=solarize)
         solarizeslide.place(x=150, y=495)
 
-
 # FUNCTIONS
 
 mirror_click = 0
 flip_click = 0
-
 
 def brightness(x):
     global outputImage
@@ -244,91 +242,86 @@ def brightness(x):
     outputImage = brightness_enhance.enhance(x)
     showimage(outputImage)
 
-
 def sharpness(x):
     global outputImage
     sharp_enhance = ImageEnhance.Sharpness(image)
     outputImage = sharp_enhance.enhance(x)
     showimage(outputImage)
 
-
 def image_blur(x):
     global outputImage
     outputImage = image.filter(ImageFilter.BoxBlur(radius=x))
     showimage(outputImage)
-
 
 def image_contour():
     global outputImage
     outputImage = image.filter(ImageFilter.CONTOUR)
     showimage(outputImage)
 
-
 def image_emboss():
     global outputImage
     outputImage = image.filter(ImageFilter.EMBOSS)
     showimage(outputImage)
-
 
 def image_smooth():
     global outputImage
     outputImage = image.filter(ImageFilter.SMOOTH)
     showimage(outputImage)
 
-
 def image_unsharp(x):
     global outputImage
     outputImage = image.filter(ImageFilter.UnsharpMask(radius=x))
     showimage(outputImage)
-
 
 def red_channel():
     global outputImage
     outputImage = image.getchannel('R')
     showimage(outputImage)
 
-
 def green_channel():
     global outputImage
     outputImage = image.getchannel('G')
     showimage(outputImage)
-
 
 def blue_channel():
     global outputImage
     outputImage = image.getchannel('B')
     showimage(outputImage)
 
-
 def pallete():
     global outputImage
     outputImage = image.convert('P')
     showimage(outputImage)
-
 
 def contrast(x):
     global outputImage
     outputImage = ImageOps.autocontrast(image=image, cutoff=x)
     showimage(outputImage)
 
-
 def invert(x):
     global outputImage
     outputImage = ImageOps.invert(image=image)
     showimage(outputImage)
 
+def rotate_image(x):
+    global outputImage
+    outputImage = image.rotate(x)
+    showimage(outputImage)
+
+def color_enhance(x):
+    global outputImage
+    outputImage = ImageEnhance.Color(image=image).enhance(x)
+    showimage(outputImage)
 
 def solarize(x):
     global outputImage
     outputImage = ImageOps.solarize(image=image, threshold=x)
     showimage(outputImage)
 
-
 def posterize(x):
     global outputImage
     outputImage = ImageOps.posterize(image=image, bits=x)
     showimage(outputImage)
-
 
 def mirror():
     global outputImage, mirror_click
@@ -340,7 +333,6 @@ def mirror():
         outputImage = ImageOps.mirror(image)
         showimage(outputImage)
 
-
 def flip():
     global outputImage, flip_click
     flip_click += 1
@@ -351,12 +343,10 @@ def flip():
         outputImage = ImageOps.flip(image)
         showimage(outputImage)
 
-
 def colorize():
     global outputImage
     outputImage = ImageOps.colorize(image=image.convert('L'), black='white', white='blue')
     showimage(outputImage)
-
 
 def border(x):
     global outputImage, border_btn
@@ -367,7 +357,6 @@ def border(x):
     border_btn = CTkButton(root, text="Border", command=lambda: border(x + 1)).place(x=3, y=580)
     showimage(outputImage)
 
-
 def pad(x):
     pads = [(600, 600), (800, 600), (900, 600), (500, 500), (800, 400), (800, 300), (700, 700), (900, 600), (700, 500),
             (800, 500), (500, 500), (900, 900), (700, 700), (600, 600), (800, 600), (900, 600), (500, 500), (800, 400),
@@ -376,6 +365,5 @@ def pad(x):
     outputImage = ImageOps.pad(image=image, size=pads[x % len(pads)])
     pad_btn = CTkButton(root, text="Pad", command=lambda: pad(x + 1)).place(x=3, y=610)
     showimage(outputImage)
-
 
 root.mainloop()
